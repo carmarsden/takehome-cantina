@@ -30,32 +30,6 @@ function parseInput(input) {
     }
 }
 
-// check if node matches the search criteria
-function evaluateNode(attribute, input, node) {
-    switch (attribute) {
-        case 'class':
-            if(node.class && node.class === input) {
-                console.log(node)
-            }
-            break;
-
-        case 'className':
-            if(node.classNames && node.classNames.includes(input.slice(1))) {
-                console.log(node)
-            }
-            break;
-        
-        case 'identifier':
-            if(node.identifier && node.identifier === input.slice(1)) {
-                console.log(node)
-            }
-            break;
-
-        default:
-            return;
-    }
-}
-
 // traverse data object with BFS
 /* reasons to use BFS rather than DFS:
 - if we are looking for a unique node e.g. identifier, we want to return the highest on the hierarchy
@@ -85,6 +59,47 @@ function traverseObj(attribute, input, obj) {
             queueArr.push(node.control)
         }
     }
+
+    return;
+}
+
+// check if node matches the search criteria
+function evaluateNode(attribute, input, node) {
+    switch (attribute) {
+        case 'class':
+            if(node.class && node.class === input) {
+                printNode(node);
+            }
+            break;
+
+        case 'className':
+            if(node.classNames && node.classNames.includes(input.slice(1))) {
+                printNode(node);
+            }
+            break;
+        
+        case 'identifier':
+            if(node.identifier && node.identifier === input.slice(1)) {
+                printNode(node);
+            }
+            break;
+
+        default:
+            return;
+    }
+}
+
+function printNode(node) {
+    // this function prints node as JSON to stdout, per instructions
+    console.log(JSON.stringify(node, null, ' '));
+    
+    /*
+    for more readable format in your CLI, print node as JS object, not JSON!
+    1. comment out line above (#94)
+    2. un-comment out line below (#102)
+    */
+
+    //console.log(node);
 
     return;
 }
